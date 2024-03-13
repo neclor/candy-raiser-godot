@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4dgov813un78"]
+
+[ext_resource type="PackedScene" uid="uid://diicrcyygya4f" path="res://game/entities/base_entity/base_entity.tscn" id="1_sjiou"]
+[ext_resource type="Script" path="res://game/entities/player/player.gd" id="1_upvil"]
+
+[node name="Player" instance=ExtResource("1_sjiou")]
+script = ExtResource("1_upvil")
+
+[node name="Polygon2D" type="Polygon2D" parent="." index="2"]
+color = Color(1, 1, 1, 0.25098)
+polygon = PackedVector2Array(0, 0, -256, -256, 256, -256)
+
+[node name="Camera2D" type="Camera2D" parent="." index="3"]
+enabled = false
