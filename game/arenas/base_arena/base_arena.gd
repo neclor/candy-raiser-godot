@@ -8,7 +8,7 @@ extends Node2D
 @onready var cell_size = tile_map.tile_set.tile_size
 
 
-var arena_height := 128
+var arena_height := 32+64
 
 
 var roofs : Array
@@ -19,6 +19,7 @@ var floors : Array
 func _ready():
 	floors = get_floors()
 	walls = get_walls()
+	walls = [walls[0]]
 	update_screen()
 
 
@@ -36,7 +37,6 @@ func update_screen():
 	#Screen.set_roof(player_info, roofs)
 	Screen.set_walls(player_info, walls)
 	Screen.queue_redraw()
-
 
 
 func get_floors():

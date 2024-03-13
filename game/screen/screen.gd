@@ -1,16 +1,11 @@
 extends Node2D
 
 
-const GAME_DISTANCE_TO_SCREEN = 32 #Distance at which objects are not distorted
 var view_angle = PI / 2
 var vertical_angle = atan(4.5/8)
 var view_angle_factor : float
 
 var screen_size = Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"), ProjectSettings.get_setting("display/window/size/viewport_height"))
-
-
-var screen_factor : float
-var game_screen_size : Vector2
 
 
 var polygons : Array
@@ -30,8 +25,6 @@ func _ready():
 
 func update_screen_settings():
 	view_angle_factor = tan(view_angle / 2)
-	screen_factor = screen_size.x / tan(view_angle / 2) / GAME_DISTANCE_TO_SCREEN
-	game_screen_size = screen_size / screen_factor
 
 
 func set_view_angle(new_view_angle : float):
@@ -48,7 +41,6 @@ func _process(_delta):
 func _draw():
 	for polygon in walls_screen_polygons:
 		draw_polygon(polygon.points, colors, uvs, Polygon3D.textures.get(polygon.texture_key))
-		print(polygon.points)
 
 
 
@@ -76,8 +68,13 @@ func create_screen_polygons(relative_polygons_3d : Array):
 		var screen_polygon_points := PackedVector2Array([])
 
 		for point in relative_polygon_3d.points:
-			var horizontal_distance_ratio = point.x / -point.y * view_angle_factor
-			var vertical_distance_ration = point.z / -point.y * 9 / 16
+			var y_coord = 10 * -1 if abs(point.y) < 10 else point.y
+			print(relative_polygon_3d.points)
+			print(y_coord)
+			print(point.y)
+			
+			var horizontal_distance_ratio = point.x / -y_coord * view_angle_factor
+			var vertical_distance_ration = point.z / -y_coord * 9 / 16
 			var screen_point = Vector2(horizontal_distance_ratio + 1, 1 - vertical_distance_ration) * (screen_size / 2)
 			screen_polygon_points.append(screen_point)
 
@@ -118,7 +115,7 @@ func get_relative_polygons_3d(player_info : Dictionary, polygons_3d : Array):
 			relative_points.append(relative_point)
 
 			var angle_to_point = Vector2(relative_point.x, relative_point.y).angle()
-			if not in_sight and -PI / 2 - view_angle / 2 <= angle_to_point and angle_to_point <= -PI / 2 + view_angle / 2:
+			if not in_sight and -PI < angle_to_point and angle_to_point < 0:
 				in_sight = true
 		if in_sight:
 			var relative_polygon_3d = Polygon3D.new(relative_points, polygon_3d.texture_key)
