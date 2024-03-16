@@ -2,11 +2,11 @@ extends Node2D
 
 
 var view_angle = PI / 2
-var vertical_angle = atan(4.5/8)
+var vertical_angle = atan(9/16)
 var view_angle_factor : float
 
 var screen_size = Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"), ProjectSettings.get_setting("display/window/size/viewport_height"))
-
+#var 
 
 var polygons : Array
 
@@ -50,12 +50,12 @@ func set_floor(player_info : Dictionary, floors : Array):
 
 
 
-func set_walls(player_info : Dictionary, walls : Array):
-	walls_screen_polygons = get_screen_polygons(player_info, walls)
+func set_walls(player : Vector4, walls : Array):
+	walls_screen_polygons = get_screen_polygons(player, walls)
 
 
-func get_screen_polygons(player_info : Dictionary, polygons_3d : Array):
-	var relative_polygons_3d = get_relative_polygons_3d(player_info, polygons_3d)
+func get_screen_polygons(player : Vector4, polygons_3d : Array):
+	var relative_polygons_3d = get_relative_polygons_3d(player, polygons_3d)
 	relative_polygons_3d.sort_custom(max_distance_to_polygon_3d)
 	var screen_polygons = create_screen_polygons(relative_polygons_3d)
 	return screen_polygons
@@ -68,13 +68,13 @@ func create_screen_polygons(relative_polygons_3d : Array):
 		var screen_polygon_points := PackedVector2Array([])
 
 		for point in relative_polygon_3d.points:
-			var y_coord = 10 * -1 if abs(point.y) < 10 else point.y
-			print(relative_polygon_3d.points)
-			print(y_coord)
-			print(point.y)
-			
+			var y_coord = 1 if abs(point.y) < 1 else point.y
+			#print(relative_polygon_3d.points)
+			#print(y_coord)
+			#print(point.y)
+			#if y_coord
 			var horizontal_distance_ratio = point.x / -y_coord * view_angle_factor
-			var vertical_distance_ration = point.z / -y_coord * 9 / 16
+			var vertical_distance_ration = point.z / -y_coord * 16 / 9
 			var screen_point = Vector2(horizontal_distance_ratio + 1, 1 - vertical_distance_ration) * (screen_size / 2)
 			screen_polygon_points.append(screen_point)
 
@@ -102,7 +102,7 @@ func max_distance_to_polygon_3d(polygon_3d_0, polygon_3d_1):
 	return false
 
 
-func get_relative_polygons_3d(player_info : Dictionary, polygons_3d : Array):
+func get_relative_polygons_3d(player : Vector4, polygons_3d : Array):
 	var relative_polygons_3d := []
 
 	for polygon_3d in polygons_3d:
@@ -110,8 +110,8 @@ func get_relative_polygons_3d(player_info : Dictionary, polygons_3d : Array):
 		var in_sight := false
 
 		for point in polygon_3d.points:
-			var player_camera_pos = player_info["position"] + Vector3(0, 0, player_info["height"])
-			var relative_point := Vector3(point - player_camera_pos).rotated(Vector3.BACK , -player_info["rotation"])
+			var player_camera_pos = Vector3(player.x, player.y, player.z)
+			var relative_point := Vector3(point - player_camera_pos).rotated(Vector3.BACK , -player.w)
 			relative_points.append(relative_point)
 
 			var angle_to_point = Vector2(relative_point.x, relative_point.y).angle()
@@ -122,76 +122,3 @@ func get_relative_polygons_3d(player_info : Dictionary, polygons_3d : Array):
 			relative_polygons_3d.append(relative_polygon_3d)
 
 	return relative_polygons_3d
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#func create_wall_polygon(floor_height : int, wall_points : PackedVector2Array, wall_height : float, texture_key : String):
-	#var points := PackedVector2Array([])
-#
-	#for point in wall_points:
-#
-		#var distance_ratio = GAME_DISTANCE_TO_SCREEN / -point.y
-		#var game_screen_coord_x = point.x * distance_ratio + game_screen_size.x / 2
-		#var game_screen_coord_y_0 = (floor_height) * distance_ratio + game_screen_size.y / 2
-		#var game_screen_coord_y_1 = (floor_height + wall_height) * distance_ratio + game_screen_size.y / 2
-#
-		#points.append(Vector2(game_screen_coord_x, game_screen_coord_y_0) * screen_factor)
-		#points.append(Vector2(game_screen_coord_x, game_screen_coord_y_1) * screen_factor)
-#
-	#var point_2 = points[2]
-	#points[2] = points[3]
-	#points[3] = point_2
-#
-	#var polygon = Polygon.new(points, texture_key)
-	#return polygon
-#
-#
-#func create_walls_boxes_relative_to_player_array(walls_boxes : Array, player_position : Vector2, player_rotation : float) -> Array:
-	#var walls_boxes_relative_to_player := []
-#
-	#for wall_box in walls_boxes:
-		#var points_relative_to_player := []
-		#var in_sight := false
-#
-		#for i in wall_box.points.size():
-			#points_relative_to_player.append(Vector2(wall_box.points[i] - player_position).rotated(-player_rotation))
-#
-			#var angle_to_point = points_relative_to_player[i].angle()
-			#if not in_sight and -PI + view_angle / 2 <= angle_to_point and angle_to_point <= -view_angle / 2:
-				#in_sight = true
-#
-		#if in_sight:
-			#var wall_box_relative_to_player = WallBox.new(points_relative_to_player, wall_box.height, wall_box.texture_key)
-			#walls_boxes_relative_to_player.append(wall_box_relative_to_player)
-#
-	#walls_boxes_relative_to_player.sort_custom(max_to_min_wall_box_distance_sort)
-	#return walls_boxes_relative_to_player
-#
-#
-#func max_to_min_wall_box_distance_sort(wall_box_0, wall_box_1):
-	#var wall_box_0_max_distance := 0.0
-	#var wall_box_1_max_distance := 0.0
-	#for point in wall_box_0.points:
-		#var point_distance = point.length()
-		#wall_box_0_max_distance = point_distance if point_distance > wall_box_0_max_distance else wall_box_0_max_distance
-	#for point in wall_box_1.points:
-		#var point_distance = point.length()
-		#wall_box_1_max_distance = point_distance if point_distance > wall_box_1_max_distance else wall_box_1_max_distance
-	#if wall_box_0_max_distance > wall_box_1_max_distance:
-		#return true
-	#return false
-

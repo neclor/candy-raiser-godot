@@ -34,7 +34,7 @@ folder_colors={
 "res://game/entities/": "purple",
 "res://game/entities/enemies/": "red",
 "res://game/entities/player/": "blue",
-"res://game/objects/": "yellow",
+"res://game/items/": "yellow",
 "res://game/screen/": "orange",
 "res://resources/": "gray"
 }
@@ -80,7 +80,9 @@ camera_off={
 2d_physics/layer_5="player"
 2d_physics/layer_6="enemy"
 2d_physics/layer_8="projectile"
+2d_physics/layer_10="item"
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

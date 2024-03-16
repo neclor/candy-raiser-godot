@@ -3,7 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://diicrcyygya4f" path="res://game/entities/base_entity/base_entity.tscn" id="1_sjiou"]
 [ext_resource type="Script" path="res://game/entities/player/player.gd" id="1_upvil"]
 
-[node name="Player" instance=ExtResource("1_sjiou")]
+[node name="Player" groups=["player"] instance=ExtResource("1_sjiou")]
+collision_layer = 24
 script = ExtResource("1_upvil")
 
 [node name="Polygon2D" type="Polygon2D" parent="." index="2"]

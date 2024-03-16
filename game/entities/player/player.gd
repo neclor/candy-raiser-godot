@@ -3,6 +3,7 @@ extends Entity
 
 var unrotated_velocity := Vector2.ZERO
 
+
 func _draw():
 	var points := PackedVector2Array([Vector2(0, -16), Vector2(10, 10), Vector2(-10, 10)])
 	var colors := PackedColorArray([Color.WHITE, Color.WHITE, Color.WHITE])
