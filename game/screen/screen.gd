@@ -106,7 +106,7 @@ func get_relative_polygons_3d(player : Vector4, polygons_3d : Array):
 			relative_points.append(relative_point)
 
 			var angle_to_point = Vector2(relative_point.x, relative_point.y).angle()
-			in_sight = in_sight or (-(PI + view_angle) / 2 < angle_to_point and angle_to_point < -(PI - view_angle) / 2)
+			in_sight = in_sight or (-PI < angle_to_point and angle_to_point < 0)
 		if in_sight:
 			var relative_polygon_3d = Polygon3D.new(relative_points, polygon_3d.texture_key)
 			relative_polygons_3d.append(relative_polygon_3d)
