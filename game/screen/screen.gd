@@ -100,13 +100,18 @@ func get_relative_polygons_3d(player : Vector4, polygons_3d : Array):
 	for polygon_3d in polygons_3d:
 		var relative_points := PackedVector3Array([])
 		var in_sight := false
+		var has_left := false
+		var has_right := false
 
 		for point in polygon_3d.points:
 			var relative_point := Vector3(point - player_camera_pos).rotated(Vector3.BACK , -player.w)
 			relative_points.append(relative_point)
 
+			has_left = has_left or (relative_point.x < 0 and relative_point.y < 0)
+			has_right = has_right or (relative_point.x > 0 and relative_point.y < 0)
 			var angle_to_point = Vector2(relative_point.x, relative_point.y).angle()
 			in_sight = in_sight or (-(PI + view_angle) / 2 < angle_to_point and angle_to_point < -(PI - view_angle) / 2)
+		in_sight = in_sight or (has_left and has_right)
 		if in_sight:
 			var relative_polygon_3d = Polygon3D.new(relative_points, polygon_3d.texture_key)
 			relative_polygons_3d.append(relative_polygon_3d)
