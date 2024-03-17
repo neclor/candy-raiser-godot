@@ -24,9 +24,7 @@ func move():
 func heal_hp(input_heal : int):
 	if input_heal <= 0:
 		return
-	hp += input_heal
-	if hp > max_hp:
-		hp = max_hp
+	hp = clamp(hp + input_heal, 0, max_hp)
 
 
 func take_damage(input_damage : int):
