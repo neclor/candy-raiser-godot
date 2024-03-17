@@ -56,7 +56,7 @@ func set_walls(player : Vector4, walls : Array):
 
 func get_screen_polygons(player : Vector4, polygons_3d : Array):
 	var relative_polygons_3d = get_relative_polygons_3d(player, polygons_3d)
-	relative_polygons_3d.sort_custom(max_distance_to_polygon_3d)
+	relative_polygons_3d.sort_custom(polygon_3d_distance_compare)
 	var screen_polygons = create_screen_polygons(relative_polygons_3d)
 	return screen_polygons
 
@@ -84,39 +84,29 @@ func create_screen_polygons(relative_polygons_3d : Array):
 
 	return screen_polygons
 
+func distance_to_polygon_3d(polygon_3d):
+	var distance := 0.0
+	for point in polygon_3d.points:
+		distance = max(distance, Vector2(point.x, point.y).length())
+	return distance
 
-func max_distance_to_polygon_3d(polygon_3d_0, polygon_3d_1):
-	var polygon_3d_0_max_distance := 0.0
-	var polygon_3d_1_max_distance := 0.0
-
-	for point in polygon_3d_0.points:
-		var distance = Vector2(point.x, point.y).length()
-		polygon_3d_0_max_distance = distance if distance > polygon_3d_0_max_distance else polygon_3d_0_max_distance
-
-	for point in polygon_3d_1.points:
-		var distance = Vector2(point.x, point.y).length()
-		polygon_3d_1_max_distance = distance if distance > polygon_3d_1_max_distance else polygon_3d_1_max_distance
-
-	if polygon_3d_0_max_distance > polygon_3d_1_max_distance:
-		return true
-	return false
-
+func polygon_3d_distance_compare(polygon_3d_0, polygon_3d_1):
+	return distance_to_polygon_3d(polygon_3d_0) > distance_to_polygon_3d(polygon_3d_1)
 
 func get_relative_polygons_3d(player : Vector4, polygons_3d : Array):
 	var relative_polygons_3d := []
+	var player_camera_pos = Vector3(player.x, player.y, player.z)
 
 	for polygon_3d in polygons_3d:
 		var relative_points := PackedVector3Array([])
 		var in_sight := false
 
 		for point in polygon_3d.points:
-			var player_camera_pos = Vector3(player.x, player.y, player.z)
 			var relative_point := Vector3(point - player_camera_pos).rotated(Vector3.BACK , -player.w)
 			relative_points.append(relative_point)
 
 			var angle_to_point = Vector2(relative_point.x, relative_point.y).angle()
-			if not in_sight and -PI < angle_to_point and angle_to_point < 0:
-				in_sight = true
+			in_sight = in_sight or (-PI < angle_to_point and angle_to_point < 0)
 		if in_sight:
 			var relative_polygon_3d = Polygon3D.new(relative_points, polygon_3d.texture_key)
 			relative_polygons_3d.append(relative_polygon_3d)
