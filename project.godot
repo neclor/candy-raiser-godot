@@ -34,7 +34,9 @@ folder_colors={
 "res://game/entities/": "purple",
 "res://game/entities/enemies/": "red",
 "res://game/entities/player/": "blue",
-"res://game/items/": "yellow",
+"res://game/objects/": "yellow",
+"res://game/objects/items/": "green",
+"res://game/objects/projectiles/": "red",
 "res://game/screen/": "orange",
 "res://resources/": "gray"
 }

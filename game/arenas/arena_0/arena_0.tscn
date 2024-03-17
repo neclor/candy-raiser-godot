@@ -5,16 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://iu3xr4g0pu8f" path="res://game/entities/enemies/base_enemy/base_enemy.tscn" id="3_bv6ha"]
 
 [node name="Arena0" instance=ExtResource("1_xv33w")]
-visible = true
 
-[node name="TileMap" parent="." index="0"]
-tile_set = ExtResource("2_oy0we")
-layer_0/name = "Floor"
-layer_1/name = "Walls"
-layer_1/tile_data = PackedInt32Array(0, 0, 0, 262150, 65536, 0)
-
-[node name="Player" parent="." index="1"]
-position = Vector2(0, 64)
-
-[node name="BaseEnemy" parent="EnemyContainer" index="0" instance=ExtResource("3_bv6ha")]
+[node name="EnemyContainer#BaseEnemy" parent="." index="0" instance=ExtResource("3_bv6ha")]
 position = Vector2(273, 114)
+
+[node name="TileMap" parent="." index="1"]
+tile_set = ExtResource("2_oy0we")
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 262150, 65536, 0)

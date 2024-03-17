@@ -1,4 +1,4 @@
-class_name Polygon3D
+class_name Wall3D
 
 
 static var textures := {}

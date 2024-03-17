@@ -1,9 +1,6 @@
 extends Entity
 
 
-var radius := 16
-
-
 @onready var player = get_parent().get_node_or_null("Player")
 @onready var ray_cast_2d = $RayCast2D
 @onready var wait_timer = $WaitTimer
@@ -57,7 +54,7 @@ func wait():
 
 
 func _on_wait_timer_timeout():
-	move_vector = Vector2.RIGHT.rotated(randf_range(-PI, PI)) * wait_speed
+	move_vector = Vector2.RIGHT.rotated(randf_range(-PI, PI)) * wait_speed if move_vector == Vector2.ZERO else Vector2.ZERO
 
 
 func fight():

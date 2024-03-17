@@ -2,8 +2,9 @@ class_name Arena
 extends Node2D
 
 
-@onready var player = $Player
-@onready var enemy_container = $EnemyContainer
+@onready var player = $ObjectsContainer/Player
+@onready var objects_container = $ObjectsContainer
+
 @onready var tile_map = $TileMap
 @onready var cell_size = tile_map.tile_set.tile_size
 
@@ -11,16 +12,11 @@ extends Node2D
 var arena_height := 32
 
 
-var roofs : Array
 var walls : Array
-var floors : Array
 
 
 func _ready():
-	floors = get_floors()
 	walls = get_walls()
-	#walls = [walls[0]]
-	update_screen()
 
 
 func _process(_delta):
@@ -28,24 +24,19 @@ func _process(_delta):
 
 
 func update_screen():
-	var player_coord := Vector4(player.position.x, player.position.y, player.position_z + player.height, player.rotation)
-	#Screen.set_floor(player_info, floors)
-	Screen.set_walls(player_coord, walls)
+	Screen.camera_position = Vector4(player.position.x, player.position.y, player.position_z + player.height, player.rotation)
+	Screen.screen_polygons = []
+
+	Screen.set_walls(walls)
+	#Screen.set_objects(objects_container.get_children())
 	Screen.queue_redraw()
 
 
-func get_floors():
-	var new_floors := []
-	var tiles = get_tiles(0)
-	for tile in tiles:
-		var floor = Polygon3D.new(tile[0], tile[1])
-		floors.append(floor)
-	return new_floors
-
-
 func get_walls():
+	Wall3D.textures = {}
 	var new_walls := []
-	var tiles = get_tiles(1)
+
+	var tiles = get_tiles(0)
 	for tile in tiles:
 		var points_amount = tile[0].size()
 		for i in points_amount:
@@ -56,26 +47,15 @@ func get_walls():
 
 			var points = PackedVector3Array([point_00, point_10, point_11, point_01])
 
-			var wall = Polygon3D.new(points, tile[1])
+			var wall = Wall3D.new(points, tile[1])
 			new_walls.append(wall)
+
 	return new_walls
-
-
-func get_roofs():
-	var new_roofs := []
-	var tiles = get_tiles(2)
-	for tile in tiles:
-		var points := []
-		var points_amount = tile[0].size()
-		for i in points_amount:
-			points.append(tile[0][i] + Vector3(0, 0, arena_height))
-		var roof = Polygon3D.new(points, tile[1])
-		roofs.append(roof)
-	return new_roofs
 
 
 func get_tiles(layer : int):
 	var tiles := []
+
 	for cell in tile_map.get_used_cells(layer):
 		var texture_key = get_texture_key(layer, cell)
 
@@ -88,6 +68,7 @@ func get_tiles(layer : int):
 
 		var tile := [points, texture_key]
 		tiles.append(tile)
+
 	return tiles
 
 
@@ -97,9 +78,9 @@ func get_texture_key(layer : int, cell : Vector2i):
 
 	var texture_key = str(source_id) + "_" + str(cell_atlas_coords)
 
-	if not Polygon3D.textures.has(texture_key):
+	if not Wall3D.textures.has(texture_key):
 		var source = tile_map.tile_set.get_source(source_id)
 		var texture = ImageTexture.create_from_image(source.texture.get_image().get_region(source.get_tile_texture_region(cell_atlas_coords)))
-		Polygon3D.textures[texture_key] = texture
+		Wall3D.textures[texture_key] = texture
 
 	return texture_key

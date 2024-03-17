@@ -6,13 +6,12 @@
 [sub_resource type="TileSet" id="TileSet_3b2vo"]
 
 [node name="BaseArena" type="Node2D"]
-visible = false
 script = ExtResource("1_kx0y4")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_3b2vo")
 format = 2
 
-[node name="Player" parent="." instance=ExtResource("2_3s4vn")]
+[node name="ObjectsContainer" type="Node2D" parent="."]
 
-[node name="EnemyContainer" type="Node2D" parent="."]
+[node name="Player" parent="ObjectsContainer" instance=ExtResource("2_3s4vn")]

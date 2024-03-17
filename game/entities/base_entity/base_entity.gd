@@ -2,8 +2,12 @@ class_name Entity
 extends CharacterBody2D
 
 
+@onready var sprite_2d = $Sprite2D
+
+
 var position_z := 0
 var height := 16
+var radius := 8
 
 
 var speed := 100

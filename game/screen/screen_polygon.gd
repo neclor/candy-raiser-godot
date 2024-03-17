@@ -2,12 +2,13 @@ class_name ScreenPolygon
 extends Node
 
 
-var texture_key : String
-
-
+var texture : ImageTexture
 var points : PackedVector2Array
+var distance : float
 
 
-func _init(new_points, new_texture_key):
+func _init(new_points, new_distance, new_texture):
 	points = new_points
-	texture_key = new_texture_key
+	distance = new_distance
+	texture = new_texture
+	#texture_key = new_texture_key
