@@ -2,7 +2,7 @@ class_name ScreenPolygon
 extends Node
 
 
-var texture : ImageTexture
+var texture : Texture2D
 var points : PackedVector2Array
 var distance : float
 

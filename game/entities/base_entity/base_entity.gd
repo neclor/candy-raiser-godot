@@ -6,7 +6,7 @@ extends CharacterBody2D
 
 
 var position_z := 0
-var height := 16
+var height := 32
 var radius := 8
 
 

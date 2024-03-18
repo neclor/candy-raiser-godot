@@ -85,7 +85,7 @@ func search():
 
 func check_player_in_sight():
 	if not player:
-		player = get_parent().get_parent().get_node_or_null("Player")
+		player = get_parent().get_node_or_null("Player")
 		if not player:
 			return false
 

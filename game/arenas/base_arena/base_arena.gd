@@ -28,7 +28,7 @@ func update_screen():
 	Screen.screen_polygons = []
 
 	Screen.set_walls(walls)
-	#Screen.set_objects(objects_container.get_children())
+	Screen.set_objects(objects_container.get_children())
 	Screen.queue_redraw()
 
 

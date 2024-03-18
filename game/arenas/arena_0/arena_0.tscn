@@ -6,9 +6,12 @@
 
 [node name="Arena0" instance=ExtResource("1_xv33w")]
 
-[node name="EnemyContainer#BaseEnemy" parent="." index="0" instance=ExtResource("3_bv6ha")]
-position = Vector2(273, 114)
-
-[node name="TileMap" parent="." index="1"]
+[node name="TileMap" parent="." index="0"]
 tile_set = ExtResource("2_oy0we")
 layer_0/tile_data = PackedInt32Array(0, 0, 0, 262150, 65536, 0)
+
+[node name="Player" parent="ObjectsContainer" index="0"]
+position = Vector2(96, 185)
+
+[node name="BaseEnemy" parent="ObjectsContainer" index="1" instance=ExtResource("3_bv6ha")]
+position = Vector2(93, 72)

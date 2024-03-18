@@ -6,3 +6,6 @@
 script = ExtResource("1_suo4k")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(100, 100)

@@ -36,36 +36,39 @@ func _draw():
 		draw_polygon(polygon.points, colors, uvs, polygon.texture)
 
 
+func set_objects(objects : Array):
+	screen_polygons.append_array(create_screen_objects_polygons(objects))
 
 
+func create_screen_objects_polygons(objects : Array):
+	var screen_objects_polygons := []
 
-#region
+	for object in objects:
+		var object_position = Vector3(object.position.x, object.position.y, object.position_z)
+		var relative_object_position = (object_position - Vector3(camera_position.x, camera_position.y, camera_position.z)).rotated(Vector3.BACK , -camera_position.w)
+
+		if relative_object_position.y < 0:
+			var max_distance = -relative_object_position.y
+
+			var point_00 = relative_object_position + Vector3(-object.radius, 0, object.height)
+			var point_10 = relative_object_position + Vector3(object.radius, 0, object.height)
+			var point_11 = relative_object_position + Vector3(object.radius, 0, 0)
+			var point_01 = relative_object_position + Vector3(-object.radius, 0, 0)
+			var object_relative_points := PackedVector3Array([point_00, point_10, point_11, point_01])
+
+			var screen_object_polygon_points := PackedVector2Array([])
+			for point in object_relative_points:
+				var horizontal_distance_ratio = point.x / -point.y * view_angle_factor
+				var vertical_distance_ration = point.z / -point.y * screen_ratio
+
+				screen_object_polygon_points.append(Vector2(horizontal_distance_ratio + 1, 1 - vertical_distance_ration) * (screen_size / 2))
+
+			var screen_polygon = ScreenPolygon.new(screen_object_polygon_points, max_distance, object.sprite_2d.texture)
+			screen_objects_polygons.append(screen_polygon)
+
+	return screen_objects_polygons
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#region Walls
 func set_walls(walls : Array):
 	screen_polygons.append_array(create_screen_wall_polygons(get_relative_walls(walls)))
 
@@ -81,7 +84,7 @@ func get_relative_walls(walls : Array):
 			var relative_point = (point - Vector3(camera_position.x, camera_position.y, camera_position.z)).rotated(Vector3.BACK , -camera_position.w)
 			relative_points.append(relative_point)
 
-			in_front = in_front or sign(relative_point.y) < 0
+			in_front = in_front or relative_point.y < 0
 
 		if in_front:
 			relative_walls.append(Wall3D.new(relative_points, wall.texture_key))
