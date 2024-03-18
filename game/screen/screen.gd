@@ -45,12 +45,6 @@ func set_camera_position(new_position : Vector3, new_rotation : float):
 
 
 func set_walls(walls : Array):
-	screen_polygons.append_array(create_screen_wall_polygons(walls))
-
-
-func create_screen_wall_polygons(walls : Array):
-	var screen_wall_polygons := []
-
 	for wall in walls:
 		var relative_points := PackedVector3Array([])
 		var in_front := false
@@ -62,18 +56,10 @@ func create_screen_wall_polygons(walls : Array):
 			in_front = in_front or relative_point.y < 0
 
 		if in_front:
-			screen_wall_polygons.append(create_screen_polygon(relative_points, wall.textures.get(wall.texture_key)))
-
-	return screen_wall_polygons
+			screen_polygons.append(create_screen_polygon(relative_points, wall.textures.get(wall.texture_key)))
 
 
 func set_objects(objects : Array):
-	screen_polygons.append_array(create_screen_objects_polygons(objects))
-
-
-func create_screen_objects_polygons(objects : Array):
-	var screen_objects_polygons := []
-
 	for object in objects:
 		var relative_object_position = (Vector3(object.position.x, object.position.y, object.position_z) - camera_position).rotated(Vector3.BACK , -camera_rotation)
 		if relative_object_position.y >= 0:
@@ -85,9 +71,7 @@ func create_screen_objects_polygons(objects : Array):
 		var point_01 = relative_object_position + Vector3(-object.radius, 0, 0)
 		var relative_points := PackedVector3Array([point_00, point_10, point_11, point_01])
 
-		screen_objects_polygons.append(create_screen_polygon(relative_points, object.sprite_2d.texture))
-
-	return screen_objects_polygons
+		screen_polygons.append(create_screen_polygon(relative_points, object.sprite_2d.texture))
 
 
 func create_screen_polygon(relative_points : PackedVector3Array, texture : Texture2D):
