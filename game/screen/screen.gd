@@ -42,10 +42,11 @@ func set_objects(objects : Array):
 
 func create_screen_objects_polygons(objects : Array):
 	var screen_objects_polygons := []
+	var camera_position_3 = Vector3(camera_position.x, camera_position.y, camera_position.z)
 
 	for object in objects:
 		var object_position = Vector3(object.position.x, object.position.y, object.position_z)
-		var relative_object_position = (object_position - Vector3(camera_position.x, camera_position.y, camera_position.z)).rotated(Vector3.BACK , -camera_position.w)
+		var relative_object_position = (object_position - camera_position_3).rotated(Vector3.BACK , -camera_position.w)
 
 		if relative_object_position.y < 0:
 			var max_distance = -relative_object_position.y
