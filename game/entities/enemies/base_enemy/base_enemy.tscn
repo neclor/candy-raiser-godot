@@ -5,12 +5,14 @@
 
 [node name="BaseEnemy" groups=["enemy"] instance=ExtResource("1_a5b3i")]
 collision_layer = 40
+collision_mask = 27
 script = ExtResource("2_otpiv")
 
 [node name="WaitTimer" type="Timer" parent="." index="0"]
 wait_time = 2.0
 
 [node name="AttackCooldownTimer" type="Timer" parent="." index="1"]
+wait_time = 2.0
 autostart = true
 
 [node name="RayCast2D" type="RayCast2D" parent="." index="4"]

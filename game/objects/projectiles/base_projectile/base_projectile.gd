@@ -15,19 +15,24 @@ var speed = 200
 
 var target_group : String
 var damage : int
+var vector := Vector2.ZERO
 
 
 func init(new_velocity : Vector2, new_damage : int, new_target_group : String):
-	velocity = new_velocity
+	vector = new_velocity
 	damage = new_damage
 	target_group = new_target_group
 
 
 func _physics_process(delta):
-	var collision = move_and_collide(velocity * speed * delta)
+	velocity = vector * speed
+	var collision = move_and_collide(vector * speed * delta)
+	#var collision = move_and_collide(vector * speed * delta)
 	print(position)
-	print(velocity)
+	print(velocity * speed * delta)
 	
-	if collision and collision.get_collider().is_in_group(target_group):
-		collision.take_demage(damage)
-	queue_free()
+	if collision:
+		if collision.get_collider().is_in_group(target_group):
+			collision.get_collider().take_damage(damage)
+		queue_free()
+

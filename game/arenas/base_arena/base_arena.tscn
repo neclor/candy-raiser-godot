@@ -15,3 +15,4 @@ format = 2
 [node name="ObjectsContainer" type="Node2D" parent="."]
 
 [node name="Player" parent="ObjectsContainer" instance=ExtResource("2_3s4vn")]
+collision_mask = 187

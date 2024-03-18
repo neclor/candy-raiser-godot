@@ -44,4 +44,5 @@ func take_damage(input_damage : int):
 
 
 func die():
-	queue_free()
+	pass
+	#queue_free()

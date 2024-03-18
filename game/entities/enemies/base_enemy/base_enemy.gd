@@ -66,7 +66,6 @@ func fight():
 	if keep_distance < vector_to_player.length():
 		move_vector = vector_to_player.normalized() * speed
 		move()
-	attack()
 
 
 func search():
