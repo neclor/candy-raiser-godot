@@ -9,7 +9,7 @@ var screen_size = Vector2(ProjectSettings.get_setting("display/window/size/viewp
 var screen_ratio = screen_size.x / screen_size.y
 
 
-var view_angle = PI / 2
+var view_angle = TAU / 3
 var view_angle_factor : float
 
 
@@ -81,8 +81,8 @@ func create_screen_polygon(relative_points : PackedVector3Array, texture : Textu
 	for point in relative_points:
 		max_distance = -point.y if max_distance < -point.y else max_distance
 
-		var horizontal_distance_ratio = point.x / -point.y * view_angle_factor
-		var vertical_distance_ration = point.z / -point.y * screen_ratio
+		var horizontal_distance_ratio = point.x / -point.y / view_angle_factor
+		var vertical_distance_ration = point.z / -point.y / (1 / screen_ratio)
 
 		screen_polygon_points.append(Vector2(horizontal_distance_ratio + 1, 1 - vertical_distance_ration) * (screen_size / 2))
 
