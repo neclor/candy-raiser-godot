@@ -24,7 +24,8 @@ func _process(_delta):
 
 
 func update_screen():
-	Screen.camera_position = Vector4(player.position.x, player.position.y, player.position_z + player.height, player.rotation)
+	Screen.set_camera_position(Vector3(player.position.x, player.position.y, player.position_z + player.height), player.rotation)
+
 	Screen.screen_polygons = []
 
 	Screen.set_walls(walls)
