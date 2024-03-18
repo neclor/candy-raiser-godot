@@ -9,7 +9,7 @@ var screen_size = Vector2(ProjectSettings.get_setting("display/window/size/viewp
 var screen_ratio = screen_size.x / screen_size.y
 
 
-var view_angle = TAU / 3
+var view_angle = PI / 3
 var view_angle_factor : float
 
 
