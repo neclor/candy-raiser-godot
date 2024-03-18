@@ -1,11 +1,46 @@
-[gd_scene load_steps=2 format=3 uid="uid://crvlmro7fwjfi"]
+[gd_scene load_steps=6 format=3 uid="uid://crvlmro7fwjfi"]
 
 [ext_resource type="Script" path="res://game/screen/screen.gd" id="1_suo4k"]
+
+[sub_resource type="Gradient" id="Gradient_fkitd"]
+colors = PackedColorArray(0, 0, 0, 1, 0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h8vuv"]
+gradient = SubResource("Gradient_fkitd")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_73m0w"]
+colors = PackedColorArray(0, 0, 0, 1, 0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_er624"]
+gradient = SubResource("Gradient_73m0w")
+fill_to = Vector2(0, 1)
 
 [node name="Screen" type="Node2D"]
 script = ExtResource("1_suo4k")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(100, 100)
+[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Roof" type="TextureRect" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_h8vuv")
+
+[node name="Floor" type="TextureRect" parent="Background/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("GradientTexture2D_er624")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]

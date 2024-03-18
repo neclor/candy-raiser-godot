@@ -10,7 +10,11 @@ script = ExtResource("2_otpiv")
 [node name="WaitTimer" type="Timer" parent="." index="0"]
 wait_time = 2.0
 
-[node name="RayCast2D" type="RayCast2D" parent="." index="3"]
+[node name="AttackCooldownTimer" type="Timer" parent="." index="1"]
+autostart = true
+
+[node name="RayCast2D" type="RayCast2D" parent="." index="4"]
 collision_mask = 17
 
 [connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
+[connection signal="timeout" from="AttackCooldownTimer" to="." method="_on_attack_cooldown_timer_timeout"]

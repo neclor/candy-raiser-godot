@@ -6,5 +6,5 @@ extends Node2D
 
 
 var position_z := 0
-var height := 8
-var radius := 4
+var height := 6
+var radius := 3

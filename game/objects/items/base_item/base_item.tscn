@@ -3,12 +3,14 @@
 [ext_resource type="Script" path="res://game/objects/items/base_item/base_item.gd" id="1_iemml"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e4ft6"]
-radius = 8.0
+radius = 3.0
 
 [node name="BaseItem" type="Node2D"]
 script = ExtResource("1_iemml")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 512
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_e4ft6")

@@ -10,11 +10,14 @@ var height := 16
 var radius := 8
 
 
-var speed := 100
+var speed := 75
 
 
 var max_hp := 100
 var hp := 100
+
+
+var target_group := "entity"
 
 
 func _physics_process(_delta):

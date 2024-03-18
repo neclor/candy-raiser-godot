@@ -1,9 +1,12 @@
+class_name Enemy
 extends Entity
 
 
 @onready var player = get_parent().get_node_or_null("Player")
 @onready var ray_cast_2d = $RayCast2D
 @onready var wait_timer = $WaitTimer
+@onready var attack_cooldown_timer = $AttackCooldownTimer
+const RED_BULLET = preload("res://game/objects/projectiles/red_projectile/red_bullet.tscn")
 
 
 enum State {
@@ -24,10 +27,6 @@ var keep_distance := 64
 
 var attack_cooldown := 1
 var attack_ready := true
-
-
-func _ready():
-	speed = 50
 
 
 func _physics_process(_delta):
@@ -96,6 +95,12 @@ func check_player_in_sight():
 	return false
 
 
+func _on_attack_cooldown_timer_timeout():
+	if state != State.FIGHT:
+		return
+	attack()
+
+
 func attack():
 	pass
 
@@ -103,3 +108,6 @@ func attack():
 func move():
 	velocity = move_vector
 	move_and_slide()
+
+
+

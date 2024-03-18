@@ -27,6 +27,7 @@ window/stretch/mode="canvas_items"
 
 folder_colors={
 "res://assets/": "yellow",
+"res://core/": "pink",
 "res://game/": "blue",
 "res://game/arenas/": "red",
 "res://game/arenas/base_arena/": "purple",

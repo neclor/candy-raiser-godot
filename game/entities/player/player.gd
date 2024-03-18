@@ -3,8 +3,11 @@ extends Entity
 
 var unrotated_velocity := Vector2.ZERO
 
-func _ready():
+
+func _init():
+	target_group = "enemy"
 	height = 8
+	speed = 125
 
 
 func _draw():

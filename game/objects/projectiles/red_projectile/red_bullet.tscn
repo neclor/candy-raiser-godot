@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://t185mglghym2"]
+
+[ext_resource type="PackedScene" uid="uid://b6vic8xxp4eh2" path="res://game/objects/projectiles/base_projectile/base_projectile.tscn" id="1_dd8vt"]
+[ext_resource type="Texture2D" uid="uid://dudm0a7qicjlc" path="res://assets/sprites/projectiles/red_bullet.png" id="2_jd1kf"]
+
+[node name="RedBullet" instance=ExtResource("1_dd8vt")]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_jd1kf")

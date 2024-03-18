@@ -29,7 +29,7 @@ func update_screen_settings():
 
 
 func set_view_angle(new_view_angle : float):
-	view_angle = clamp(new_view_angle, PI / 3, 2 * PI / 3)
+	view_angle = clamp(new_view_angle, PI / 3, TAU / 3)
 	update_screen_settings()
 
 

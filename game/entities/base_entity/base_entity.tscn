@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://diicrcyygya4f"]
+[gd_scene load_steps=3 format=3 uid="uid://diicrcyygya4f"]
 
 [ext_resource type="Script" path="res://game/entities/base_entity/base_entity.gd" id="1_4wf28"]
-[ext_resource type="Texture2D" uid="uid://kp3snq4ch6nd" path="res://assets/sprites/game/entities/enemies/candy_corn.png" id="2_vs0vh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f5hui"]
 radius = 8.0
@@ -15,4 +14,3 @@ script = ExtResource("1_4wf28")
 shape = SubResource("CircleShape2D_f5hui")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_vs0vh")
