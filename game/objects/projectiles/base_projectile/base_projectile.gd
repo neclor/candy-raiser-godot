@@ -27,10 +27,7 @@ func init(new_velocity : Vector2, new_damage : int, new_target_group : String):
 func _physics_process(delta):
 	velocity = vector * speed
 	var collision = move_and_collide(vector * speed * delta)
-	#var collision = move_and_collide(vector * speed * delta)
-	print(position)
-	print(velocity * speed * delta)
-	
+
 	if collision:
 		if collision.get_collider().is_in_group(target_group):
 			collision.get_collider().take_damage(damage)
